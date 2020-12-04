@@ -18,6 +18,8 @@ import {selectCurrentUser} from './redux/user/user.selector'
 // Components
 import Header from './Components/header/header'
 
+// Add collections to firebase
+// import {selectCollectionsForPreview} from './redux/shop/shop.selectors'
 
 class App extends React.Component {
 
@@ -38,6 +40,8 @@ class App extends React.Component {
         });
       }
         setCurrentUser(userAuth);
+        // add collections to firebase
+        // addCollectionAndDocuments('collections',collectionsArray.map(({title,items}) => ({title,items}) ));
     });
   }
 
