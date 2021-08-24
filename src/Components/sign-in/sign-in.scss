@@ -2,6 +2,12 @@
   width: 380px;
   display: flex;
   flex-direction: column;
+  
+  
+  @media screen and (max-width:400px) {
+    padding: 10px;
+    width: 95vw;
+  }
 
   .title{
     margin: 10px 0;
@@ -10,5 +16,11 @@
   .buttons{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 3px;
+    @media screen and (max-width:500px) {
+      flex-direction: column;
+    }
+
+    
   }
 }

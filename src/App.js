@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import { GlobalStyle } from './global.styles';
 
 // Pages
 import HomePage from './Pages/Homepage';
@@ -11,10 +11,10 @@ import {Route,Switch, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux'
 import {createStructuredSelector} from 'reselect'
 
-import {auth,createUserProfileDocument} from './Firebase/firebase.utils';
 
-import {setCurrentUser} from './redux/user/user.actions';
 import {selectCurrentUser} from './redux/user/user.selector'
+import {checkUserSession} from './redux/user/user.actions';
+
 // Components
 import Header from './Components/header/header'
 
@@ -22,28 +22,12 @@ import Header from './Components/header/header'
 // import {selectCollectionsForPreview} from './redux/shop/shop.selectors'
 
 class App extends React.Component {
-
-
   unsubscribeFromAuth = null;
 
   componentDidMount(){
-    const {setCurrentUser} = this.props;
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
-
-        userRef.onSnapshot(snapShot=>{
-          setCurrentUser({
-              id: snapShot.id,
-              ...snapShot.data()
-            });
-        });
-      }
-        setCurrentUser(userAuth);
-        // add collections to firebase
-        // addCollectionAndDocuments('collections',collectionsArray.map(({title,items}) => ({title,items}) ));
-    });
-  }
+   const {checkUserSession} = this.props;
+   checkUserSession();
+  };
 
   componentWillUnmount(){
     this.unsubscribeFromAuth();
@@ -52,6 +36,7 @@ class App extends React.Component {
   render(){
     return (
       <div>
+        <GlobalStyle />
         <Header />
         <Switch>
           <Route exact path='/' component={HomePage} />
@@ -69,8 +54,9 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  checkUserSession: () => dispatch(checkUserSession())
 })
+
 
 export default connect(
   mapStateToProps,
