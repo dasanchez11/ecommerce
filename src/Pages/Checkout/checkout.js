@@ -5,7 +5,7 @@ import {createStructuredSelector } from 'reselect';
 import CheckoutItem from '../../Components/checkout-item/checkout-item'
 import {selectCartItems,selectCartTotal} from '../../redux/cart/cart.selectors';
 import CustomButton from '../../Components/custom-button/custom-button';
-
+import SpinnerText from '../../Components/spinner-text/spinnerText.component';
 
 
 const CheckoutPage = ({cartItems,total}) => {
@@ -28,7 +28,6 @@ const CheckoutPage = ({cartItems,total}) => {
     }
   }
 
-  console.log(loading)
 
   var data = useMemo(() => ({
     //Parametros compra (obligatorio)
@@ -90,9 +89,8 @@ const CheckoutPage = ({cartItems,total}) => {
     <div className='total'  >
       <span> TOTAL: ${total} </span>
       {/* <StripeCheckoutButton price={total}/> */}
-      <CustomButton onClick={handlePayClick}>
-       epay Pay
-        
+      <CustomButton inverted={true} onClick={handlePayClick}>
+       {loading? <SpinnerText/> : 'epay Pay'}
       </CustomButton>
       
     
