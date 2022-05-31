@@ -14,6 +14,11 @@ export const GlobalStyle =  createGlobalStyle`
             padding: 10px;
             width: 100%
         }
+
+        @media screen and (max-width:500px) {
+            padding: 0px;
+            width: 100%
+        }
     }
     
     a {
